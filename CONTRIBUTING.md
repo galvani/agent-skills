@@ -64,6 +64,11 @@ CI runs all of this on every push to `main` and on every pull request
 6. Open one pull request per skill. Say what it does, which agent and version you tested with,
    and what you did not test.
 
+`check_skills.py` also reads the text of every skill, because that text is loaded into someone
+else's agent. It fails on a line that tells an agent to ignore its instructions, points at private
+keys, pipes a download into a shell, or lifts the agent's restrictions. When a skill quotes such a
+line on purpose, to warn about it, put `<!-- allow-injection-check: <reason> -->` on the line above.
+
 ## Run CI locally
 
 The workflow in `.github/workflows/validate.yml` also runs on your machine through

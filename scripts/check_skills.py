@@ -24,6 +24,49 @@ MAX_DESCRIPTION = 1024
 MAX_NAME = 64
 MAX_SKILL_LINES = 500
 
+# Skill text is loaded into a user's agent, so it is the one place where instructions can reach
+# someone else's session. These are high-severity heuristics, not a classifier: a human still reads
+# the skill. A line that is intentional takes a marker above it, see CONTRIBUTING.md.
+INJECTION = (
+    (
+        r"\b(ignore|disregard|forget)\b[^.\n]{0,40}\b(previous|prior|above|earlier|system)\b"
+        r"[^.\n]{0,20}\b(instruction|prompt|rule|direction)",
+        "tells the agent to ignore its existing instructions",
+    ),
+    (
+        r"\b(reveal|print|show|repeat|output|dump)\b[^.\n]{0,30}"
+        r"\b(system prompt|hidden instructions|your instructions)\b",
+        "asks the agent to reveal its instructions",
+    ),
+    (
+        r"(~|\$HOME)/\.ssh|\.aws/credentials|id_rsa|\.netrc\b|/etc/shadow",
+        "points at private keys or credentials",
+    ),
+    (
+        r"\b(curl|wget)\b[^|\n]{0,120}\|\s*(sudo\s+)?(ba|z)?sh\b",
+        "pipes a download into a shell, so the code that runs is not in the repo",
+    ),
+    (
+        r"\bbase64\s+(-d|--decode)[^|\n]{0,60}\|\s*(ba|z)?sh\b",
+        "runs decoded text as a shell script",
+    ),
+    (
+        r"\b(iwr|invoke-webrequest)\b[^|\n]{0,120}\|\s*iex\b|\biex\b[^|\n]{0,80}"
+        r"\b(downloadstring|net\.webclient)\b",
+        "downloads and executes PowerShell",
+    ),
+    (
+        r"\beval\s+[\"']?(\$\(|`)",
+        "evaluates shell output as code",
+    ),
+    (
+        r"\byou are now\b[^.\n]{0,40}\b(unrestricted|unfiltered|without (any )?(rule|restriction))"
+        r"|\b(developer|god) mode\b",
+        "tries to lift the agent's restrictions",
+    ),
+)
+ALLOW = "allow-injection-check"
+
 errors = []
 warnings = []
 
@@ -99,6 +142,25 @@ def check_links(path):
         if fragment and destination.is_file() and destination.suffix == ".md":
             if slug(fragment) not in anchors(destination):
                 error(f"{where}: link '{target}' points at a heading that does not exist")
+
+
+def check_injection(folder):
+    """Skill text ships into a user's agent: flag instruction-override and remote-exec shapes."""
+    for path in sorted(folder.rglob("*")):
+        if not path.is_file() or path.suffix not in TEXT:
+            continue
+        lines = path.read_text(encoding="utf-8", errors="ignore").splitlines()
+        for number, line in enumerate(lines, 1):
+            if ALLOW in line or (number > 1 and ALLOW in lines[number - 2]):
+                continue
+            for pattern, what in INJECTION:
+                match = re.search(pattern, line, re.IGNORECASE)
+                if match:
+                    error(
+                        f"{path.relative_to(ROOT)}:{number}: {what} "
+                        f"('{match.group(0)[:60]}'). If it is intentional, put "
+                        f"'<!-- {ALLOW}: <reason> -->' on the line above"
+                    )
 
 
 def check_skill(folder):
@@ -224,6 +286,7 @@ def main():
 
     for folder in folders:
         check_skill(folder)
+        check_injection(folder)
     check_plugin(folders)
     check_readme(folders)
     check_personal_data()
