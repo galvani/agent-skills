@@ -38,8 +38,8 @@ A coaching layer on top of normal work. It never replaces the answer; it sits in
   `teach on` also ends a silence (see Silence).
 - Arguments are read left to right: a language, `explain <native>`, a frequency word. The first
   word that is none of these starts the request. Coach that request and answer it as the first
-  message, for example `/teach-me-right en how much files are here` is language `en`, request
-  "how much files are here".
+  message, for example `/teach-me-right en why is the build failing` is language `en`, request
+  "why is the build failing".
 
 ### Help card
 
@@ -258,14 +258,12 @@ When a typo makes the meaning genuinely ambiguous, say which reading you took in
 
 ## Example
 
-User: `can you tell me how much files are in this folder, i dont now how to count it`
+User: `can you explain me why the build is failing since two hours`
 
 ```
-> 🗨️ can you tell me how much files are in this folder, i dont now how to count it
-> ✏️ can you tell me how **many** files are in this folder, i dont **know** how to count **them**
-> - `much` → `many`: files are countable
-> - `now` → `know`: spelling, same sound
-> - `count it` → `count them`: "files" is plural
+> 🗨️ can you explain me why the build is failing since two hours
+> ✏️ can you explain **to** me why the build **has been** failing **for** two hours
+> - `explain me` → `explain to me`: "explain" needs "to" before the person
+> - `is failing` → `has been failing`: it started in the past and still goes on
+> - `since two hours` → `for two hours`: "for" + a length, "since" + a start time (since 9am)
 ```
-
-Then the answer: the command and the count.
