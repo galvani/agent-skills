@@ -1,0 +1,78 @@
+name: Validate skills
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 5 * * 1" # weekly, full git history scanned for secrets
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  SKILL_VALIDATOR_VERSION: 1.8.0
+
+jobs:
+  spec:
+    name: Spec, links, token budget
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      # Pinned release + checksum, because the action shown in most tutorials for this
+      # (skillmark/skillmark-lint) does not exist, and this one has no Action of its own.
+      - name: Install skill-validator ${{ env.SKILL_VALIDATOR_VERSION }}
+        run: |
+          set -euo pipefail
+          version="$SKILL_VALIDATOR_VERSION"
+          base="https://github.com/agent-ecosystem/skill-validator/releases/download/v$version"
+          archive="skill-validator_${version}_linux_amd64.tar.gz"
+          checksums="skill-validator_${version}_checksums.txt"
+          cd "$RUNNER_TEMP"
+          curl -fsSLO "$base/$archive"
+          curl -fsSLO "$base/$checksums"
+          grep " $archive\$" "$checksums" | sha256sum -c -
+          tar xzf "$archive" skill-validator
+          echo "$RUNNER_TEMP" >> "$GITHUB_PATH"
+
+      - name: Validate every skill
+        run: skill-validator check --strict --allow-extra-frontmatter skills/ --emit-annotations
+
+      - name: Report to the job summary
+        if: always()
+        run: |
+          {
+            echo '### Agent Skills validation'
+            echo '```'
+            skill-validator check --strict --allow-extra-frontmatter skills/ || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  repo:
+    name: Repo rules (layout, links, marketplace, personal data)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - run: python3 scripts/check_skills.py
+      - name: Syntax-check bundled scripts
+        run: |
+          python3 -m compileall -q scripts skills
+          find skills -name '*.sh' -exec bash -n {} +
+
+  secrets:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
