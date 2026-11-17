@@ -9,7 +9,7 @@ The main agent loads the skill and writes the correction block at the top of eve
 - Works in every agent that renders markdown: Claude Code, opencode, claude.ai.
 - Cost: about 150 extra output tokens per message from the main model. On Opus 5.5
   ($20 / MTok output) that is about $0.003 per message, $0.30 per 100 messages. The skill text
-  itself (about 1.3k tokens) sits in the cached context.
+  itself (about 3.4k tokens) sits in the cached context.
 - Weaknesses: the block delays the start of the real answer, and the mode lives only in the
   conversation, so it can fade after context compaction.
 

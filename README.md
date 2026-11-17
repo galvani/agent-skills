@@ -1,5 +1,7 @@
 # agent-skills
 
+[![Validate skills](https://github.com/galvani/agent-skills/actions/workflows/validate.yml/badge.svg)](https://github.com/galvani/agent-skills/actions/workflows/validate.yml)
+
 Skills for AI coding agents, by [galvani](https://github.com/galvani). A skill is a folder with a
 `SKILL.md` that the agent loads when it is relevant. Claude Code and opencode read this format;
 each skill here is self-contained, so you can take one without the rest.
@@ -11,8 +13,8 @@ each skill here is self-contained, so you can take one without the rest.
 | [teach-me-right](skills/teach-me-right/) | Language coaching while you work. Quiet by default: it speaks up only when a message of yours has a real mistake worth learning from, shows the fix and the reason, and the agent carries on. Silent when you are stressed or near your usage limit. |
 
 Running costs are small: about 190 tokens per session for the skill list entry, ~3.4k when it
-loads, ~150 per correction. The full table is in the
-[teach-me-right README](skills/teach-me-right/README.md#cost).
+loads, ~150 per correction. What the skill does, in the words it coaches: see
+[docs/teach-me-right.md](docs/teach-me-right.md).
 
 ## Install a skill
 
