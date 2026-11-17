@@ -1,10 +1,11 @@
 # teach-me-right
 
-Language coaching for developers, built into the coding agent they already use. Every message you
-send gets a short correction block first: spelling fixes only when the wording was already natural,
-or a better and more common phrasing with a reason for each change. Then the agent does what you
-asked. English by default; any language on request, with the explanations optionally in your
-native language.
+Language coaching for developers, built into the coding agent they already use. It stays quiet
+unless it has something to teach. When a message of yours has a real mistake, a short block shows
+what you wrote, the fix with the changed words in bold, and why; then the agent does what you
+asked. Clean messages, short replies, terse chat style and obvious typos get nothing, and it goes
+fully silent when you are stressed, debugging, or close to your usage limit. English by default;
+any language on request, with the explanations optionally in your native language.
 
 ```
 > 🗨️ can you tell me how much files are in this folder, i dont now how to count it
@@ -48,12 +49,12 @@ Measured with `claude plugin details` (token counts) and Anthropic's list prices
 | What | Tokens | When |
 | --- | --- | --- |
 | Skill description in the skill list | ~190 | every session, always |
-| Skill text (`SKILL.md`) | ~3.3k | once per session, when it loads (cached afterwards) |
+| Skill text (`SKILL.md`) | ~3.4k | once per session, when it loads (cached afterwards) |
 | One correction block | ~150 output | per message that gets a block (`smart` mode skips clean ones) |
 
 | Model | One block | 100 blocks | Loading the skill once |
 | --- | --- | --- | --- |
-| Opus 5.5 ($4 in / $20 out per MTok) | $0.003 | $0.30 | $0.013 |
+| Opus 5.5 ($4 in / $20 out per MTok) | $0.003 | $0.30 | $0.014 |
 | Sonnet 5.5 ($2 in / $10 out per MTok) | $0.0015 | $0.15 | $0.007 |
 | Haiku 5.5 ($0.10 in / $0.50 out per MTok) | $0.00008 | $0.008 | $0.0003 |
 

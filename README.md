@@ -8,9 +8,9 @@ each skill here is self-contained, so you can take one without the rest.
 
 | Skill | What it does |
 | --- | --- |
-| [teach-me-right](skills/teach-me-right/) | Language coaching while you work. Every message you send gets a short correction (typos, then wording), and the agent carries on with your request. Tolerant of terse chat, silent when you are stressed or your usage limit is nearly reached. |
+| [teach-me-right](skills/teach-me-right/) | Language coaching while you work. Quiet by default: it speaks up only when a message of yours has a real mistake worth learning from, shows the fix and the reason, and the agent carries on. Silent when you are stressed or near your usage limit. |
 
-Running costs are small: about 190 tokens per session for the skill list entry, ~3.3k when it
+Running costs are small: about 190 tokens per session for the skill list entry, ~3.4k when it
 loads, ~150 per correction. The full table is in the
 [teach-me-right README](skills/teach-me-right/README.md#cost).
 

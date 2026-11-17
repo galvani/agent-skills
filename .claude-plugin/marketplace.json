@@ -12,7 +12,7 @@
       "source": "./",
       "strict": false,
       "version": "0.1.0",
-      "description": "Language coaching while you work: every message you send is corrected (typos, then wording) before the agent carries out the request.",
+      "description": "Language coaching while you work. Quiet unless a message has a real mistake worth learning from, then a short correction before the agent carries on.",
       "skills": [
         "./skills/teach-me-right"
       ]

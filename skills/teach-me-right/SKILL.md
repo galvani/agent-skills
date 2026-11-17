@@ -1,16 +1,16 @@
 ---
 name: teach-me-right
 description: >-
-  Language coaching mode for a developer improving a non-native language
-  (English by default, any language on request). Once switched on, every
-  message the user sends is first answered with a short correction block:
-  the spelling-only fix when the wording was already natural, or a better,
-  more common phrasing when it was not, with the reason for each change.
-  Then the request itself is carried out as normal. Use when the user says
-  "/teach-me-right", "teach me right", "correct my English", "fix my
-  grammar as we go", "coach my <language>", or asks to learn while working.
-  Stays on for the rest of the session until the user says "stop teaching",
-  "teach off" or "/teach-me-right off". "/teach-me-right help" lists the commands.
+  Language coaching for a developer improving a non-native language (English by
+  default, any language on request). Once switched on, it stays quiet unless a
+  message has a real mistake worth learning from; then a short block shows the
+  user's message, the fix with the changed words in bold, and the reason, and
+  the request is carried out as normal. Tolerates terse chat style and obvious
+  typos, and stays silent when the user is stressed or near a usage limit. Use
+  when the user says "/teach-me-right", "teach me right", "correct my English",
+  "fix my grammar as we go", "coach my <language>", or asks to learn while
+  working. Stays on until "stop teaching", "teach off" or "/teach-me-right off".
+  "/teach-me-right help" lists the commands.
 argument-hint: "[help | off | <language> [explain <native>] | every | smart | digest | summary | setup]"
 ---
 
@@ -210,7 +210,7 @@ Coach the language the user does not know yet, not the style they chose or the k
   `know`, `than` / `then`), a real word in place of another, or the same misspelling repeated.
 - In `every` mode the same tolerance applies; `every` only adds the ✓ for clean messages.
 
-## The block, before every answer
+## The block
 
 Put it first, set off as a quote, then a blank line, then the normal reply:
 
