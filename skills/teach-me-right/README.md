@@ -5,7 +5,7 @@ unless it has something to teach. When a message of yours has a real mistake, a 
 what you wrote, the fix with the changed words in bold, and why; then the agent does what you
 asked. Clean messages, short replies, terse chat style and obvious typos get nothing, and it goes
 fully silent when you are stressed, debugging, or close to your usage limit. English by default;
-any language on request, with the explanations optionally in your native language.
+any language you pick, with the explanations optionally in your native language.
 
 ```
 > 🗨️ can you tell me how much files are in this folder, i dont now how to count it

@@ -2,7 +2,7 @@
 name: teach-me-right
 description: >-
   Language coaching for a developer improving a non-native language (English by
-  default, any language on request). Once switched on, it stays quiet unless a
+  default, any language you pick). Once switched on, it stays quiet unless a
   message has a real mistake worth learning from; then a short block shows the
   user's message, the fix with the changed words in bold, and the reason, and
   the request is carried out as normal. Tolerates terse chat style and obvious
