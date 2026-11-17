@@ -1,0 +1,21 @@
+{
+  "name": "galvani-skills",
+  "owner": {
+    "name": "galvani"
+  },
+  "metadata": {
+    "description": "Skills for AI coding agents by galvani."
+  },
+  "plugins": [
+    {
+      "name": "teach-me-right",
+      "source": "./",
+      "strict": false,
+      "version": "0.1.0",
+      "description": "Language coaching while you work: every message you send is corrected (typos, then wording) before the agent carries out the request.",
+      "skills": [
+        "./skills/teach-me-right"
+      ]
+    }
+  ]
+}
