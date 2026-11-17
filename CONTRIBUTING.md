@@ -5,7 +5,9 @@ Thanks for sharing a skill or improving one. Small, focused changes are the easi
 ## What belongs here
 
 A skill that is useful to any developer with an AI coding agent, not tied to one machine, employer
-or private service. If it only works with your own tools, keep it in your own repo.
+or private service. If it only works with your own tools, keep it in your own repo. Everything
+merged here is public under the MIT licence and installable by anyone, so send a skill here only
+when you mean to publish it.
 
 ## Layout
 
